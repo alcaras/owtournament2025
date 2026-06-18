@@ -81,8 +81,11 @@ ROSTER = {
 NONBRACKET = {'yagman':'Yagman','yagmam':'Yagman','cyclex':'Cycle4x','plantvogue':'PlantVogue',
               'antvogue':'PlantVogue'}
 
+CANON_ALIAS = {'yagmam': 'yagman', 'pbm': 'thepurplebullmoose', 'yagiz': 'yagman'}
 def canon(n):
     """Map a normalized name to a canonical bracket player (prefix/substring)."""
+    if n in CANON_ALIAS:
+        return CANON_ALIAS[n]
     if n in ROSTER:
         return n
     for c in ROSTER:

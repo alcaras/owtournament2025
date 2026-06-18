@@ -3,7 +3,7 @@
  "champion": "Klass",
  "runner_up": "Ninjaa",
  "n_bracket_matches": 58,
- "n_matchups": 54,
+ "n_matchups": 53,
  "n_videos": 139,
  "total_views": 44570,
  "total_likes": 1828,
@@ -122,7 +122,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "persia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -922,7 +930,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "babylonia"
+    ],
+    [
+     "greece"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -987,7 +1003,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "aksum"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1126,7 +1150,7 @@
      "carthage"
     ]
    ],
-   "nation_games": 2
+   "nation_games": 1
   },
   {
    "players": [
@@ -1360,7 +1384,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1433,7 +1465,7 @@
      "babylonia"
     ]
    ],
-   "nation_games": 2
+   "nation_games": 1
   },
   {
    "players": [
@@ -1745,7 +1777,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "hittite"
+    ],
+    [
+     "persia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1883,7 +1923,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "aksum"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -2113,7 +2161,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "assyria"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -2211,7 +2267,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "persia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -2679,7 +2743,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "rome"
+    ],
+    [
+     "hittite"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -3007,7 +3079,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "aksum"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -3312,7 +3392,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "aksum"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -3476,7 +3564,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "assyria"
+    ],
+    [
+     "egypt"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -3574,7 +3670,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -3639,7 +3743,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "greece"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -3769,7 +3881,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "persia"
+    ],
+    [
+     "greece"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4146,7 +4266,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "aksum"
+    ],
+    [
+     "greece"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4221,7 +4349,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "greece"
+    ],
+    [
+     "assyria"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4359,7 +4495,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "aksum"
+    ],
+    [
+     "assyria"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4628,7 +4772,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "persia"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4769,7 +4921,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "greece"
+    ],
+    [
+     "egypt"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4877,7 +5037,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "persia"
+    ],
+    [
+     "assyria"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4942,7 +5110,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "hittite"
+    ],
+    [
+     "hittite"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5040,7 +5216,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "rome"
+    ],
+    [
+     "greece"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5171,7 +5355,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "greece"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5279,7 +5471,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "egypt"
+    ],
+    [
+     "carthage"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5377,7 +5577,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "persia"
+    ],
+    [
+     "hittite"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5442,7 +5650,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "babylonia"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5507,7 +5723,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "rome"
+    ],
+    [
+     "egypt"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5523,15 +5747,15 @@
    "winner": null,
    "bracket": false,
    "sub": true,
-   "n_parts": 5,
-   "n_videos": 6,
-   "total_views": 1393,
-   "total_likes": 90,
-   "avg_views": 279,
-   "avg_likes": 15.0,
-   "lv_ratio": 64.6,
+   "n_parts": 6,
+   "n_videos": 7,
+   "total_views": 1515,
+   "total_likes": 104,
+   "avg_views": 252,
+   "avg_likes": 14.9,
+   "lv_ratio": 68.6,
    "first": "2025-09-29",
-   "hours": 10.2,
+   "hours": 11.3,
    "segments": [
     {
      "label": "Part 1",
@@ -5676,6 +5900,39 @@
      ]
     },
     {
+     "label": "Part 5",
+     "kind": "p",
+     "primary": {
+      "id": "XnjwZzp3rMU",
+      "title": "Nizar v Yagmam - Part 5 - Old World Community Tournament",
+      "angle": "Broadcast",
+      "rank": 0,
+      "pkey": [
+       "p",
+       5
+      ],
+      "views": 122,
+      "likes": 14,
+      "dur": 4110,
+      "date": "2025-10-12",
+      "channel": "The Siontific Method",
+      "url": "https://www.youtube.com/watch?v=XnjwZzp3rMU",
+      "thumb": "https://i.ytimg.com/vi/XnjwZzp3rMU/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "Broadcast",
+       "url": "https://www.youtube.com/watch?v=XnjwZzp3rMU",
+       "channel": "The Siontific Method",
+       "views": 122,
+       "dur": 4110,
+       "thumb": "https://i.ytimg.com/vi/XnjwZzp3rMU/mqdefault.jpg",
+       "id": "XnjwZzp3rMU",
+       "title": "Nizar v Yagmam - Part 5 - Old World Community Tournament"
+      }
+     ]
+    },
+    {
      "label": "Part 6",
      "kind": "p",
      "primary": {
@@ -5710,7 +5967,15 @@
     }
    ],
    "clips": [],
-   "nations": null
+   "nations": [
+    [
+     "assyria"
+    ],
+    [
+     "aksum"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -5931,68 +6196,15 @@
     }
    ],
    "clips": [],
-   "nations": null
-  },
-  {
-   "players": [
-    "Nizar",
-    "Yagman"
+   "nations": [
+    [
+     "persia"
+    ],
+    [
+     "hittite"
+    ]
    ],
-   "label": "Nizar v Yagman",
-   "key": "nizar|yagmam",
-   "round": "Substitute",
-   "round_depth": 0,
-   "rounds": [],
-   "bracket_ids": [],
-   "winner": null,
-   "bracket": false,
-   "sub": false,
-   "n_parts": 1,
-   "n_videos": 1,
-   "total_views": 122,
-   "total_likes": 14,
-   "avg_views": 122,
-   "avg_likes": 14.0,
-   "lv_ratio": 114.8,
-   "first": "2025-10-12",
-   "hours": 1.1,
-   "segments": [
-    {
-     "label": "Full match",
-     "kind": "p",
-     "primary": {
-      "id": "XnjwZzp3rMU",
-      "title": "Nizar v Yagmam - Part 5 - Old World Community Tournament",
-      "angle": "Broadcast",
-      "rank": 0,
-      "pkey": [
-       "p",
-       5
-      ],
-      "views": 122,
-      "likes": 14,
-      "dur": 4110,
-      "date": "2025-10-12",
-      "channel": "The Siontific Method",
-      "url": "https://www.youtube.com/watch?v=XnjwZzp3rMU",
-      "thumb": "https://i.ytimg.com/vi/XnjwZzp3rMU/mqdefault.jpg"
-     },
-     "angles": [
-      {
-       "angle": "Broadcast",
-       "url": "https://www.youtube.com/watch?v=XnjwZzp3rMU",
-       "channel": "The Siontific Method",
-       "views": 122,
-       "dur": 4110,
-       "thumb": "https://i.ytimg.com/vi/XnjwZzp3rMU/mqdefault.jpg",
-       "id": "XnjwZzp3rMU",
-       "title": "Nizar v Yagmam - Part 5 - Old World Community Tournament"
-      }
-     ]
-    }
-   ],
-   "clips": [],
-   "nations": null
+   "nation_games": 1
   }
  ],
  "unfilmed": [
