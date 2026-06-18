@@ -122,6 +122,20 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .mini .th:hover img{border-color:var(--gold-soft);}
 .mini .th .tl{font-size:9.5px;color:var(--text-dim);margin-top:2px;line-height:1.25;}
 .mini .novid{font-size:12px;color:var(--text-faint);font-style:italic;}
+/* nation chips + crests (colors ported from owreference nation-tokens.css) */
+.nat{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:1px 8px 1px 3px;border-radius:11px;background:var(--nation-bg,#555);color:var(--nation-fg,#fff);white-space:nowrap;}
+.nat img{width:15px;height:15px;border-radius:50%;object-fit:cover;background:#0003;}
+.natrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:10px 22px 2px;font-size:12.5px;color:var(--text-soft);}
+.natrow .np{display:inline-flex;align-items:center;gap:6px;}
+.natrow .vs{color:var(--text-faint);font-size:11px;}
+.mini .natrow{margin:7px 0 0;font-size:11.5px;gap:7px;}
+.n-aksum{--nation-bg:#f8a3b4;--nation-fg:#f5f6f8;} .n-assyria{--nation-bg:#fadc3b;--nation-fg:#111418;}
+.n-babylonia{--nation-bg:#82c83e;--nation-fg:#f5f6f8;} .n-carthage{--nation-bg:#f6efe1;--nation-fg:#111418;}
+.n-egypt{--nation-bg:#bc6304;--nation-fg:#f5f6f8;} .n-greece{--nation-bg:#2360bc;--nation-fg:#f5f6f8;}
+.n-hittite{--nation-bg:#80e3e8;--nation-fg:#111418;} .n-kush{--nation-bg:#ffffb6;--nation-fg:#111418;}
+.n-maurya{--nation-bg:#a749ff;--nation-fg:#f5f6f8;} .n-persia{--nation-bg:#c04e4a;--nation-fg:#f5f6f8;}
+.n-rome{--nation-bg:#880d56;--nation-fg:#f5f6f8;} .n-tamil{--nation-bg:#00b281;--nation-fg:#f5f6f8;}
+.n-yuezhi{--nation-bg:#ad7e00;--nation-fg:#f5f6f8;}
 footer{max-width:1140px;margin:0 auto;padding:30px 24px 60px;color:var(--text-faint);font-size:12.5px;border-top:1px solid var(--border);}
 footer a{color:var(--gold-soft);}
 @media(max-width:600px){.match-stats{margin-left:0;text-align:left;}}
@@ -155,7 +169,8 @@ footer a{color:var(--gold-soft);}
 
 <footer>
   <p>Compiled 2026-06-18 from YouTube across <span id="nchan"></span> caster channels (Mohawk Games, The Siontific Method, alcaras, Nizar Gaming, Syno, Aran, Jams, and more). Bracket data from the
-  <a href="https://challonge.com/owduels2025">Challonge bracket</a>. A "match" bundles every video of one matchup (casts + player PoVs + multi-part). View/like counts are lifetime totals; some parts have likes hidden. 8 early-round bracket matches have no known video.</p>
+  <a href="https://challonge.com/owduels2025">Challonge bracket</a>. A "match" bundles every video of one matchup (casts + player PoVs + multi-part). View/like counts are lifetime totals; some parts have likes hidden. 8 early-round bracket matches have no known video.
+  Nations (with crests/colors from the <a href="https://alcaras.github.io/owreference/">Old World Reference</a>) come from per-ankh game saves where available (~15 matchups); the rest aren't in the public save pool.</p>
 </footer>
 
 <script>
@@ -310,7 +325,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -407,7 +423,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -471,7 +496,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "egypt"
+    ],
+    [
+     "assyria"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -568,7 +602,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "egypt"
+    ],
+    [
+     "greece"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -665,7 +708,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "assyria"
+    ],
+    [
+     "carthage"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -795,7 +847,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "persia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -958,7 +1019,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1055,7 +1125,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -1119,7 +1190,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -1249,7 +1321,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "assyria"
+    ],
+    [
+     "carthage"
+    ]
+   ],
+   "nation_games": 2
   },
   {
    "players": [
@@ -1409,7 +1490,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1473,7 +1563,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -1537,7 +1628,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "babylonia"
+    ]
+   ],
+   "nation_games": 2
   },
   {
    "players": [
@@ -1601,7 +1701,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -1774,7 +1875,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "babylonia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1838,7 +1948,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -1902,7 +2013,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "persia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -1966,7 +2086,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -2195,7 +2316,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -2292,7 +2414,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -2366,7 +2489,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -2496,7 +2620,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "persia"
+    ],
+    [
+     "egypt"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -2560,7 +2693,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "rome"
+    ],
+    [
+     "babylonia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -2634,7 +2776,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "persia"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -2731,7 +2882,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -2927,7 +3079,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3057,7 +3210,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3230,7 +3384,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3360,7 +3515,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3523,7 +3679,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3620,7 +3777,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3684,7 +3842,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3748,7 +3907,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -3812,7 +3972,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4115,7 +4276,16 @@ const DATA = {
       }
      ]
     }
-   ]
+   ],
+   "nations": [
+    [
+     "carthage"
+    ],
+    [
+     "rome"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4179,7 +4349,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4253,7 +4424,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4390,7 +4562,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4487,7 +4660,16 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": [
+    [
+     "assyria"
+    ],
+    [
+     "assyria"
+    ]
+   ],
+   "nation_games": 1
   },
   {
    "players": [
@@ -4584,7 +4766,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4648,7 +4831,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4788,7 +4972,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4895,7 +5080,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -4959,7 +5145,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5056,7 +5243,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5186,7 +5374,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5293,7 +5482,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5390,7 +5580,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5454,7 +5645,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5518,7 +5710,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5720,7 +5913,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5846,7 +6040,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5939,7 +6134,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   },
   {
    "players": [
@@ -5999,7 +6195,8 @@ const DATA = {
      ]
     }
    ],
-   "clips": []
+   "clips": [],
+   "nations": null
   }
  ],
  "unfilmed": [
@@ -6070,6 +6267,13 @@ document.getElementById('statstrip').innerHTML = [
 function nameHtml(m){
   return m.players.map(p => p===m.winner ? `<span class="win">${p}</span>` : p).join(' <span style="color:var(--text-faint)">v</span> ');
 }
+const NATNAME={carthage:'Carthage',rome:'Rome',persia:'Persia',greece:'Greece',egypt:'Egypt',assyria:'Assyria',babylonia:'Babylonia',hittite:'Hittite',kush:'Kush',aksum:'Aksum',maurya:'Maurya',tamil:'Tamil',yuezhi:'Yuezhi'};
+const natChips = slugs => (slugs||[]).map(s=>`<span class="nat n-${s}"><img loading="lazy" src="crests/${s}.png" alt="">${NATNAME[s]||s}</span>`).join(' ');
+function natRow(m){
+  if(!m.nations) return '';
+  const ps = m.players.map((p,i)=>{ const s=m.nations[i]||[]; return s.length?`<span class="np">${p} ${natChips(s)}</span>`:''; }).filter(Boolean);
+  return ps.length ? `<div class="natrow">${ps.join('<span class="vs">vs</span>')}</div>` : '';
+}
 const angShort = a => a.replace('PoV — ','▸ ').replace('PoV','▸ PoV');
 function segCard(seg){          // big card (featured)
   const pr = seg.primary, iv = pr.angle==='Interview';
@@ -6103,6 +6307,7 @@ document.getElementById('featured').innerHTML = Object.keys(BLURBS).map(label=>{
         <div><div class="v">${fmt(m.total_likes)}</div><div class="l">Likes</div></div>
       </div>
     </div>
+    ${natRow(m)}
     <p class="blurb">${BLURBS[label]}</p>
     <div class="parts">${allSegs(m).map(segCard).join('')}</div>
   </article>`;
@@ -6117,6 +6322,7 @@ function miniCard(m, bc){
   return `<div class="mini">
     <div class="mt">${nameHtml(m)} <span class="badge ${bc}">${m.round}</span></div>
     <div class="mmeta">${m.n_parts} part${m.n_parts>1?'s':''}${m.n_videos>m.n_parts?` (${m.n_videos} w/ PoVs)`:''} · ${fmt(m.total_views)} views · ${fmt(m.total_likes)} likes${m.winner?` · ${m.winner} won`:''}</div>
+    ${natRow(m)}
     <div class="thumbs">${allSegs(m).map(segThumb).join('')}</div>
   </div>`;
 }
