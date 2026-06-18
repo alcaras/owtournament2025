@@ -100,6 +100,12 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .part .pl{font-size:12px;font-weight:600;} .part .pl.iv{color:var(--gold-soft);}
 .part .pv{font-size:10.5px;color:var(--text-dim);margin-top:2px;}
 .part .ch{font-size:10px;color:var(--text-faint);margin-top:1px;}
+.part .alts{font-size:10.5px;color:var(--text-faint);margin-top:5px;line-height:1.5;}
+.part .alts a{color:var(--gold-soft);}
+.mini .th{position:relative;}
+.mini .th .alts{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px;}
+.mini .th .alts a{font-size:9px;color:var(--gold-soft);background:var(--bg-elev-2);border:1px solid var(--border);border-radius:3px;padding:0 3px;}
+.mini .th .alts a:hover{border-color:var(--gold-soft);text-decoration:none;}
 
 /* browse by round */
 .round-head{display:flex;align-items:center;gap:12px;margin:34px 0 4px;}
@@ -143,7 +149,7 @@ footer a{color:var(--gold-soft);}
   <div class="section-head"><h2>Browse Every Match by Bracket Round</h2><div class="sub" id="browsesub"></div></div>
   <div id="browse"></div>
 
-  <div class="section-head"><h2>Other Games</h2><div class="sub">Tournament-tagged matches outside the main bracket</div></div>
+  <div class="section-head"><h2>Substitute Players</h2><div class="sub">Subbed-in players (Yagman, Cycle4x) who played real tournament matches but aren't in the Challonge roster</div></div>
   <div class="mgrid" id="nonbracket"></div>
 </main>
 
@@ -169,13 +175,13 @@ const BLURBS = {
   "Aran v Nizar":
     "A Winners' Bracket Semifinal between two of the deepest-running players in the field.",
   "Alcaras v Nizar":
-    "A six-part Quarterfinal marathon, covered as both a full cast and a player PoV series.",
+    "A Quarterfinal between two of the sharpest players in the field — covered as both a full cast and alcaras's player PoV (three parts, six videos).",
   "Aran v Siontific":
     "A three-part Quarterfinal heavyweight clash — one of the most-watched series of the bracket.",
   "Alcaras v Ninjaa":
     "Deep in the losers' bracket, Ninjaa's elimination run continues — three hard-fought games.",
   "Alcaras v Auro":
-    "A four-game losers'-bracket battle; Alcaras edges it to keep his run alive.",
+    "A four-part losers'-bracket battle; Alcaras edges it to keep his run alive.",
   "Auro v Ninjaa":
     "The very first match aired — and still one of the most-watched single games of the whole event.",
 };
@@ -199,14 +205,23 @@ document.getElementById('statstrip').innerHTML = [
 function nameHtml(m){
   return m.players.map(p => p===m.winner ? `<span class="win">${p}</span>` : p).join(' <span style="color:var(--text-faint)">v</span> ');
 }
-function partCard(p){
-  const iv = p.label==='Interview';
-  return `<a class="part" href="${p.url}" target="_blank" rel="noopener" title="${p.title.replace(/"/g,'&quot;')}">
-    <div class="tw"><img loading="lazy" src="${p.thumb}" alt=""><div class="dur">${durShort(p.dur)}</div></div>
-    <div class="cap"><div class="pl${iv?' iv':''}">${p.label}</div>
-    <div class="pv">${p.views!=null?fmt(p.views)+' views':''}${p.likes!=null?' · '+p.likes+'♥':''}</div>
-    <div class="ch">${p.channel||''}</div></div></a>`;
+const angShort = a => a.replace('PoV — ','▸ ').replace('PoV','▸ PoV');
+function segCard(seg){          // big card (featured)
+  const pr = seg.primary, iv = pr.angle==='Interview';
+  const alts = seg.angles.slice(1);
+  const altHtml = alts.length ? `<div class="alts">also: ${alts.map(a=>`<a href="${a.url}" target="_blank" rel="noopener">${angShort(a.angle)}</a>`).join(' · ')}</div>` : '';
+  return `<div class="part">
+    <a class="tw" href="${pr.url}" target="_blank" rel="noopener" title="${pr.title?pr.title.replace(/"/g,'&quot;'):''}"><img loading="lazy" src="${pr.thumb}" alt=""><div class="dur">${durShort(pr.dur)}</div></a>
+    <div class="cap"><div class="pl${iv?' iv':''}">${seg.label}</div>
+    <div class="pv">${pr.angle!=='Broadcast'?pr.angle+' · ':''}${pr.views!=null?fmt(pr.views)+' views':''}</div>
+    <div class="ch">${pr.channel||''}</div>${altHtml}</div></div>`;
 }
+function segThumb(seg){         // mini thumb (browse)
+  const pr = seg.primary, alts = seg.angles.slice(1);
+  const altHtml = alts.length ? `<div class="alts">${alts.map(a=>`<a href="${a.url}" target="_blank" rel="noopener" title="${a.angle}">${angShort(a.angle)}</a>`).join(' ')}</div>` : '';
+  return `<div class="th"><a href="${pr.url}" target="_blank" rel="noopener" title="${pr.title?pr.title.replace(/"/g,'&quot;'):''}"><img loading="lazy" src="${pr.thumb}" alt=""><div class="tl">${seg.label}</div></a>${altHtml}</div>`;
+}
+const allSegs = m => [...(m.segments||[]), ...(m.clips||[])];
 
 // featured
 document.getElementById('featured').innerHTML = Object.keys(BLURBS).map(label=>{
@@ -216,7 +231,7 @@ document.getElementById('featured').innerHTML = Object.keys(BLURBS).map(label=>{
     <div class="match-head">
       <div class="match-title">
         <h3>${nameHtml(m)} <span class="badge ${bc}">${m.round}</span></h3>
-        <div class="meta">${m.n_games} game${m.n_games>1?'s':''} · ${m.n_videos} video${m.n_videos>1?'s':''} · ${m.hours}h · first aired ${m.first}${m.winner?` · ${m.winner} won`:''}</div>
+        <div class="meta">${m.n_parts} part${m.n_parts>1?'s':''}${m.n_videos>m.n_parts?` · ${m.n_videos} videos w/ PoVs`:''} · ${m.hours}h · first aired ${m.first}${m.winner?` · ${m.winner} won`:''}</div>
       </div>
       <div class="match-stats">
         <div><div class="v">${fmt(m.total_views)}</div><div class="l">Views</div></div>
@@ -224,39 +239,38 @@ document.getElementById('featured').innerHTML = Object.keys(BLURBS).map(label=>{
       </div>
     </div>
     <p class="blurb">${BLURBS[label]}</p>
-    <div class="parts">${m.parts.map(partCard).join('')}</div>
+    <div class="parts">${allSegs(m).map(segCard).join('')}</div>
   </article>`;
 }).join('');
 
 // browse by round
-const bracketMatches = M.filter(m => m.round!=='Non-bracket');
+const bracketMatches = M.filter(m => m.round!=='Substitute');
 const unfByRound = {}; (DATA.unfilmed||[]).forEach(u => (unfByRound[u.round]=unfByRound[u.round]||[]).push(u));
-const roundsPresent = DATA.order.filter(r => r!=='Non-bracket' && (bracketMatches.some(m=>m.round===r) || unfByRound[r]));
+const roundsPresent = DATA.order.filter(r => r!=='Substitute' && (bracketMatches.some(m=>m.round===r) || unfByRound[r]));
 document.getElementById('browsesub').textContent = `${bracketMatches.length} matches with video · 8 early matches not filmed`;
+function miniCard(m, bc){
+  return `<div class="mini">
+    <div class="mt">${nameHtml(m)} <span class="badge ${bc}">${m.round}</span></div>
+    <div class="mmeta">${m.n_parts} part${m.n_parts>1?'s':''}${m.n_videos>m.n_parts?` (${m.n_videos} w/ PoVs)`:''} · ${fmt(m.total_views)} views · ${fmt(m.total_likes)} likes${m.winner?` · ${m.winner} won`:''}</div>
+    <div class="thumbs">${allSegs(m).map(segThumb).join('')}</div>
+  </div>`;
+}
 document.getElementById('browse').innerHTML = roundsPresent.map(r=>{
   const ms = bracketMatches.filter(m=>m.round===r).sort((a,b)=>b.total_views-a.total_views);
   const unf = unfByRound[r]||[];
   const bc = badgeClass(r);
-  const cards = ms.map(m=>`<div class="mini">
-    <div class="mt">${nameHtml(m)} <span class="badge ${bc}">${m.round}</span></div>
-    <div class="mmeta">${m.n_videos} video${m.n_videos>1?'s':''} · ${fmt(m.total_views)} views · ${fmt(m.total_likes)} likes${m.winner?` · ${m.winner} won`:''}</div>
-    <div class="thumbs">${m.parts.map(p=>`<a class="th" href="${p.url}" target="_blank" rel="noopener" title="${p.title.replace(/"/g,'&quot;')}"><img loading="lazy" src="${p.thumb}" alt=""><div class="tl">${p.label}</div></a>`).join('')}</div>
-  </div>`).join('');
+  const cards = ms.map(m=>miniCard(m,bc)).join('');
   const empties = unf.map(u=>`<div class="mini empty">
-    <div class="mt">${u.players? '' : ''}${u.label} <span class="badge ${bc}">${u.round}</span></div>
+    <div class="mt">${u.label} <span class="badge ${bc}">${u.round}</span></div>
     <div class="mmeta">${u.winner?u.winner+' won':''}</div>
     <div class="novid">No known video of this match</div></div>`).join('');
   return `<div class="round-head"><h3>${r}</h3><span class="ct">${ms.length+unf.length} match${(ms.length+unf.length)>1?'es':''}</span><div class="rule"></div></div>
     <div class="mgrid">${cards}${empties}</div>`;
 }).join('');
 
-// non-bracket
-const nb = M.filter(m=>m.round==='Non-bracket').sort((a,b)=>b.total_views-a.total_views);
-document.getElementById('nonbracket').innerHTML = nb.map(m=>`<div class="mini">
-  <div class="mt">${m.players.join(' v ')}</div>
-  <div class="mmeta">${m.n_videos} videos · ${fmt(m.total_views)} views · ${fmt(m.total_likes)} likes</div>
-  <div class="thumbs">${m.parts.map(p=>`<a class="th" href="${p.url}" target="_blank" rel="noopener" title="${p.title.replace(/"/g,'&quot;')}"><img loading="lazy" src="${p.thumb}" alt=""><div class="tl">${p.label}</div></a>`).join('')}</div>
-</div>`).join('');
+// substitute players
+const nb = M.filter(m=>m.round==='Substitute').sort((a,b)=>b.total_views-a.total_views);
+document.getElementById('nonbracket').innerHTML = nb.map(m=>miniCard(m,'')).join('');
 </script>
 </body>
 </html>
