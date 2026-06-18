@@ -32,7 +32,7 @@ def disp(n): return ROSTER.get(n) or NONB.get(n) or n.title()
 RN = {1:'WB Round 1',2:'WB Round 2',3:'WB Quarterfinal',4:'WB Semifinal',5:'WB Final',6:'Grand Final',
       -1:'LB Round 1',-2:'LB Round 2',-3:'LB Round 3',-4:'LB Round 4',-5:'LB Round 5',-6:'LB Round 6',-7:'LB Round 7',-8:'LB Final'}
 ORDER = ['Grand Final','WB Final','LB Final','WB Semifinal','LB Round 7','LB Round 6','WB Quarterfinal',
-         'LB Round 5','LB Round 4','WB Round 2','LB Round 3','LB Round 2','WB Round 1','LB Round 1','Non-bracket']
+         'LB Round 5','LB Round 4','WB Round 2','LB Round 3','LB Round 2','WB Round 1','LB Round 1','Substitute']
 def depth(rn): return len(ORDER) - ORDER.index(rn)
 
 brpairs = defaultdict(list)
@@ -57,20 +57,33 @@ for line in open('/tmp/new_stats.tsv'):
                           likes=int(p[2]) if p[2] not in('NA','') else None,
                           date=p[3], dur=int(p[4]) if p[4] not in('NA','') else 0, channel=p[5], title=p[6])
 
-def plabel(title):
+POV_CHAN = {'alcaras':'alcaras','fluffybunny':'FluffyBunny','fluffbunny':'FluffyBunny',
+            'nizar':'Nizar','aran':'Aran','jams':'Jams','siontific':'Siontific','syno':'Syno'}
+def angle_of(title, channel):
     t = title.lower()
-    if 'interview' in t or 'discussion' in t or 'post-game' in t or 'postmatch' in t or 'post game' in t:
-        return 'Interview'
-    kind = 'PoV' if 'pov' in t else ('Cast' if 'cast' in t else '')
-    mt = re.search(r'turn\s*(\d+)', t)
-    mp = re.search(r'part\s*(\d+)', t) or re.search(r'\bpt\.?\s*(\d+)', t) or re.search(r'\bg(\d+)\b', t)
-    if mt: base = f'Turn {mt.group(1)}'
-    elif mp: base = f'Part {mp.group(1)}'
-    else: base = 'Full game'
-    return f'{kind} · {base}' if kind else base
+    if any(w in t for w in ('interview','discussion','post-game','postmatch','post game','postgame','wrap-up','wrap up')):
+        return ('Interview', 9)
+    if 'pov' in t:
+        ch = (channel or '').lower()
+        who = next((v for k, v in POV_CHAN.items() if k in ch), '')
+        return (f'PoV — {who}' if who else 'PoV', 2)
+    if 'cast' in t:
+        return ('Cast', 1)
+    return ('Broadcast', 0)
+
+def partkey(title):
+    t = title.lower()
+    m = re.search(r'turn\s*(\d+)', t)
+    if m: return ('t', int(m.group(1)))
+    m = re.search(r'part\s*(\d+)', t) or re.search(r'\bpt\.?\s*(\d+)', t) or re.search(r'\bg(\d+)\b', t)
+    if m: return ('p', int(m.group(1)))
+    return ('p', 1)
 
 def fdate(d):
     return f'{d[:4]}-{d[4:6]}-{d[6:8]}' if d and len(d) == 8 else d
+
+# substitute players who really played but aren't in the Challonge roster
+SUBS = {'yagman', 'cyclex', 'plantvogue', 'antvogue'}
 
 matches = []
 for key, vids in groups.items():
@@ -84,29 +97,53 @@ for key, vids in groups.items():
         rounds = [RN[m['round']] for m in bms]
         bids = [m['identifier'] for m in bms]
     else:
-        round_name = 'Non-bracket'; winner = None; rounds = []; bids = []
-    parts = []
+        round_name = 'Substitute'; winner = None; rounds = []; bids = []
+    is_sub = (a in SUBS) or (b in SUBS)
+
+    vrec = []
     for vid, title in vids:
         s = stats.get(vid, {})
-        parts.append(dict(id=vid, label=plabel(title), title=title,
-                          views=s.get('views'), likes=s.get('likes'), dur=s.get('dur', 0),
-                          date=fdate(s.get('date', '')), channel=s.get('channel'),
-                          url=f'https://www.youtube.com/watch?v={vid}',
-                          thumb=f'https://i.ytimg.com/vi/{vid}/mqdefault.jpg'))
-    games = [p for p in parts if p['label'] != 'Interview']
-    vv = [p['views'] for p in games if p['views'] is not None]
-    ll = [p['likes'] for p in games if p['likes'] is not None]
-    parts.sort(key=lambda p: (p['date'] or '', p['label']))
-    n = len(games) or 1
+        date = fdate(s.get('date', ''))
+        if date and date < '2025-08-01':       # drop pre-tournament (e.g. 2022 PlantVogue)
+            continue
+        ang, rank = angle_of(title, s.get('channel'))
+        vrec.append(dict(id=vid, title=title, angle=ang, rank=rank, pkey=partkey(title),
+                         views=s.get('views'), likes=s.get('likes'), dur=s.get('dur', 0),
+                         date=date, channel=s.get('channel'),
+                         url=f'https://www.youtube.com/watch?v={vid}',
+                         thumb=f'https://i.ytimg.com/vi/{vid}/mqdefault.jpg'))
+    if not vrec:
+        continue
+
+    # group videos into segments by part-key; Cast+PoV of same part = one segment (angles)
+    segmap = {}
+    for v in vrec:
+        segmap.setdefault(v['pkey'], []).append(v)
+    segments, clips = [], []
+    for (kind, num), vs in sorted(segmap.items(), key=lambda kv: (kv[0][0] != 'p', kv[0][1])):
+        vs.sort(key=lambda v: (v['rank'], v['date'] or ''))
+        primary = vs[0]
+        seg = dict(label=('Turn ' + str(num)) if kind == 't' else ('Part ' + str(num) if len(segmap) > 1 or kind == 't' else 'Full match'),
+                   kind=kind, primary=primary,
+                   angles=[dict(angle=v['angle'], url=v['url'], channel=v['channel'],
+                                views=v['views'], dur=v['dur'], thumb=v['thumb'], id=v['id'], title=v['title']) for v in vs])
+        (clips if kind == 't' else segments).append(seg)
+
+    games_segs = [s for s in segments if s['primary']['angle'] != 'Interview']
+    vv = [v['views'] for v in vrec if v['views'] is not None]
+    ll = [v['likes'] for v in vrec if v['likes'] is not None]
+    n_parts = len(games_segs) or 1
     tv, tl = sum(vv), sum(ll)
     matches.append(dict(
         players=[disp(a), disp(b)], label=f'{disp(a)} v {disp(b)}', key=key,
-        round=round_name, round_depth=depth(round_name), rounds=rounds, bracket_ids=bids,
-        winner=winner, bracket=bool(bms), n_videos=len(parts), n_games=len(games),
-        total_views=tv, total_likes=tl, avg_views=round(tv/n), avg_likes=round(tl/len(ll),1) if ll else 0,
+        round=round_name, round_depth=depth(round_name) if bms else 0, rounds=rounds, bracket_ids=bids,
+        winner=winner, bracket=bool(bms), sub=is_sub,
+        n_parts=len(games_segs), n_videos=len(vrec),
+        total_views=tv, total_likes=tl, avg_views=round(tv/n_parts), avg_likes=round(tl/len(ll),1) if ll else 0,
         lv_ratio=round(tl/tv*1000, 1) if tv else 0,
-        first=min((p['date'] for p in parts if p['date']), default=''),
-        hours=round(sum(p['dur'] for p in parts)/3600, 1), parts=parts))
+        first=min((v['date'] for v in vrec if v['date']), default=''),
+        hours=round(sum(v['dur'] for v in vrec)/3600, 1),
+        segments=segments, clips=clips))
 
 # unfilmed bracket matches
 unfilmed = []
@@ -119,8 +156,6 @@ for key, ms in brpairs.items():
 
 champ = [m for m in br if m['round'] == 6][0]
 champion = disp(canon(norm(champ['winner'])))
-runner = disp(canon(norm(champ['p1'] if champ['winner'] != champ['p1'] else champ['p2'])))
-# wait: winner_id resolves to winner name already; runner = the other
 runner = disp(canon(norm(champ['p2'] if champ['winner'] == champ['p1'] else champ['p1'])))
 
 matches.sort(key=lambda m: (-m['round_depth'], -m['total_views']))
@@ -135,7 +170,5 @@ json.dump(out, open(f'{PROJ}/matches.json', 'w'), indent=1)
 print(f"champion: {champion}  runner-up: {runner}")
 print(f"matchups: {len(matches)} | videos: {out['n_videos']} | views: {out['total_views']:,} | likes: {out['total_likes']:,} | hours: {out['total_hours']}")
 print(f"unfilmed bracket matches: {len(unfilmed)}")
-print("\ntop by round_depth:")
-for m in matches[:14]:
-    w = f" — {m['winner']} won" if m['winner'] else ""
-    print(f"  {m['round']:16} {m['label']:34} {m['n_videos']}v {m['total_views']:>5}views{w}")
+for m in matches:
+    if m.get('sub'): print(f"  SUB {m['label']:26} {m['n_parts']}p/{m['n_videos']}v")
