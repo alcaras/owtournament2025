@@ -89,8 +89,8 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .match-stats .v{font-family:var(--font-display);font-size:21px;}
 .match-stats .l{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--text-faint);margin-top:2px;}
 .blurb{padding:0 22px 14px;color:var(--text-soft);max-width:76ch;}
-.parts{display:flex;gap:11px;overflow-x:auto;padding:4px 22px 20px;scrollbar-width:thin;}
-.part{flex:0 0 auto;width:178px;display:block;border-radius:var(--radius-sm);overflow:hidden;
+.parts{display:flex;flex-wrap:wrap;gap:11px;padding:4px 22px 20px;align-items:flex-start;}
+.part{flex:0 0 178px;width:178px;display:flex;flex-direction:column;border-radius:var(--radius-sm);overflow:hidden;
   background:var(--bg-elev-2);border:1px solid var(--border);transition:transform .12s,border-color .12s;}
 .part:hover{transform:translateY(-3px);border-color:var(--gold-soft);text-decoration:none;}
 .part .tw{display:block;position:relative;aspect-ratio:16/9;background:#000;}
@@ -100,12 +100,26 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .part .pl{font-size:12px;font-weight:600;} .part .pl.iv{color:var(--gold-soft);}
 .part .pv{font-size:10.5px;color:var(--text-dim);margin-top:2px;}
 .part .ch{font-size:10px;color:var(--text-faint);margin-top:1px;}
-.part .alts{font-size:10.5px;color:var(--text-faint);margin-top:5px;line-height:1.5;}
+.part .alts{font-size:10.5px;color:var(--text-faint);margin:0 9px 9px;line-height:1.5;}
 .part .alts a{color:var(--gold-soft);}
+/* PoV row — sits directly below the cast thumbnail of the same part */
+.part .povtw{display:block;position:relative;aspect-ratio:16/9;background:#000;margin-top:auto;border-top:1px solid var(--border);}
+.part .povtw+.povtw{border-top:1px solid var(--border);}
+.part .povtw img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9;}
+.part .povtw:hover img{opacity:1;}
+.part .povtw .povtag{position:absolute;left:5px;bottom:5px;display:flex;align-items:center;gap:4px;
+  background:rgba(10,10,12,.82);color:var(--gold-soft);font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;}
+.part .povtw .povtag .pvc{color:var(--text-soft);font-weight:500;}
 .mini .th{position:relative;}
 .mini .th .alts{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px;}
 .mini .th .alts a{font-size:9px;color:var(--gold-soft);background:var(--bg-elev-2);border:1px solid var(--border);border-radius:3px;padding:0 3px;}
 .mini .th .alts a:hover{border-color:var(--gold-soft);text-decoration:none;}
+/* PoV thumbnail stacked under each browse part, lined up with it */
+.mini .th .povth{display:block;position:relative;margin-top:3px;border-radius:4px;overflow:hidden;border:1px solid var(--border);}
+.mini .th .povth img{width:128px;aspect-ratio:16/9;object-fit:cover;display:block;background:#000;opacity:.88;}
+.mini .th .povth:hover img{opacity:1;}
+.mini .th .povth:hover{border-color:var(--gold-soft);}
+.mini .th .povth span{position:absolute;left:3px;bottom:3px;background:rgba(10,10,12,.82);color:var(--gold-soft);font-size:9px;font-weight:600;padding:0 4px;border-radius:3px;}
 
 /* browse by round */
 .round-head{display:flex;align-items:center;gap:12px;margin:34px 0 4px;}
@@ -116,8 +130,8 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .mini.empty{opacity:.55;border-style:dashed;}
 .mini .mt{font-family:var(--font-display);font-size:18px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
 .mini .mmeta{color:var(--text-dim);font-size:11.5px;margin:3px 0 9px;}
-.mini .thumbs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding-bottom:3px;}
-.mini .th{flex:0 0 auto;width:128px;}
+.mini .thumbs{display:flex;flex-wrap:wrap;gap:7px;padding-bottom:3px;align-items:flex-start;}
+.mini .th{flex:0 0 128px;width:128px;}
 .mini .th img{width:128px;aspect-ratio:16/9;height:auto;object-fit:cover;border-radius:4px;border:1px solid var(--border);display:block;background:#000;}
 .mini .th:hover img{border-color:var(--gold-soft);}
 .mini .th .tl{font-size:9.5px;color:var(--text-dim);margin-top:2px;line-height:1.25;}
@@ -208,10 +222,10 @@ const DATA = {
  "runner_up": "Ninjaa",
  "n_bracket_matches": 58,
  "n_matchups": 53,
- "n_videos": 139,
- "total_views": 44570,
- "total_likes": 1828,
- "total_hours": 388.5,
+ "n_videos": 160,
+ "total_views": 47824,
+ "total_likes": 1974,
+ "total_hours": 446.1,
  "order": [
   "Grand Final",
   "WB Final",
@@ -460,18 +474,18 @@ const DATA = {
    "winner": "Ninjaa",
    "bracket": true,
    "sub": false,
-   "n_parts": 1,
-   "n_videos": 1,
-   "total_views": 672,
-   "total_likes": 25,
-   "avg_views": 672,
-   "avg_likes": 25.0,
-   "lv_ratio": 37.2,
+   "n_parts": 2,
+   "n_videos": 2,
+   "total_views": 1276,
+   "total_likes": 45,
+   "avg_views": 638,
+   "avg_likes": 22.5,
+   "lv_ratio": 35.3,
    "first": "2026-03-05",
-   "hours": 2.1,
+   "hours": 5.3,
    "segments": [
     {
-     "label": "Full match",
+     "label": "Part 1",
      "kind": "p",
      "primary": {
       "id": "OWRixqZ8xmI",
@@ -500,6 +514,39 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/OWRixqZ8xmI/mqdefault.jpg",
        "id": "OWRixqZ8xmI",
        "title": "Aran v Ninjaa - Old World Community Tournament SEMI-FINAL"
+      }
+     ]
+    },
+    {
+     "label": "Part 2",
+     "kind": "p",
+     "primary": {
+      "id": "Zeenizp13Bc",
+      "title": "Aran v. Ninjaa, Part 2 [Old World Tournament] [Cast]",
+      "angle": "Cast",
+      "rank": 1,
+      "pkey": [
+       "p",
+       2
+      ],
+      "views": 604,
+      "likes": 20,
+      "dur": 11466,
+      "date": "2026-03-08",
+      "channel": "alcaras",
+      "url": "https://www.youtube.com/watch?v=Zeenizp13Bc",
+      "thumb": "https://i.ytimg.com/vi/Zeenizp13Bc/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "Cast",
+       "url": "https://www.youtube.com/watch?v=Zeenizp13Bc",
+       "channel": "alcaras",
+       "views": 604,
+       "dur": 11466,
+       "thumb": "https://i.ytimg.com/vi/Zeenizp13Bc/mqdefault.jpg",
+       "id": "Zeenizp13Bc",
+       "title": "Aran v. Ninjaa, Part 2 [Old World Tournament] [Cast]"
       }
      ]
     }
@@ -745,15 +792,15 @@ const DATA = {
    "winner": "Ninjaa",
    "bracket": true,
    "sub": false,
-   "n_parts": 3,
-   "n_videos": 3,
-   "total_views": 1137,
-   "total_likes": 52,
-   "avg_views": 379,
-   "avg_likes": 17.3,
-   "lv_ratio": 45.7,
+   "n_parts": 4,
+   "n_videos": 7,
+   "total_views": 1631,
+   "total_likes": 71,
+   "avg_views": 408,
+   "avg_likes": 10.1,
+   "lv_ratio": 43.5,
    "first": "2026-02-22",
-   "hours": 9.3,
+   "hours": 20.2,
    "segments": [
     {
      "label": "Part 1",
@@ -785,6 +832,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/FClFZsxsP8Y/mqdefault.jpg",
        "id": "FClFZsxsP8Y",
        "title": "alcaras v. Ninjaa, Part 1 [Old World Tournament] [Cast]"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=1B9KAmckeZI",
+       "channel": "alcaras",
+       "views": 183,
+       "dur": 10812,
+       "thumb": "https://i.ytimg.com/vi/1B9KAmckeZI/mqdefault.jpg",
+       "id": "1B9KAmckeZI",
+       "title": "alcaras v. Ninjaa, Part 1 [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -818,6 +875,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/LKJAAAqEANA/mqdefault.jpg",
        "id": "LKJAAAqEANA",
        "title": "alcaras v. Ninjaa, Part 2 [Old World Tournament] [Cast]"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=2eH82d3T17o",
+       "channel": "alcaras",
+       "views": 110,
+       "dur": 10978,
+       "thumb": "https://i.ytimg.com/vi/2eH82d3T17o/mqdefault.jpg",
+       "id": "2eH82d3T17o",
+       "title": "alcaras v. Ninjaa, Part 2 [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -851,6 +918,49 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/oLQLsuXpsw4/mqdefault.jpg",
        "id": "oLQLsuXpsw4",
        "title": "Alcaras v Ninjaa - part 3 - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=h9pCa2wplJU",
+       "channel": "alcaras",
+       "views": 114,
+       "dur": 11312,
+       "thumb": "https://i.ytimg.com/vi/h9pCa2wplJU/mqdefault.jpg",
+       "id": "h9pCa2wplJU",
+       "title": "alcaras v. Ninjaa, Part 3 [Old World Tournament] [PoV]"
+      }
+     ]
+    },
+    {
+     "label": "Part 4",
+     "kind": "p",
+     "primary": {
+      "id": "vzrcKaGlvso",
+      "title": "alcaras v. Ninjaa, Part 4 [Old World Tournament] [PoV]",
+      "angle": "PoV \u2014 alcaras",
+      "rank": 2,
+      "pkey": [
+       "p",
+       4
+      ],
+      "views": 87,
+      "likes": 3,
+      "dur": 6132,
+      "date": "2026-03-02",
+      "channel": "alcaras",
+      "url": "https://www.youtube.com/watch?v=vzrcKaGlvso",
+      "thumb": "https://i.ytimg.com/vi/vzrcKaGlvso/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=vzrcKaGlvso",
+       "channel": "alcaras",
+       "views": 87,
+       "dur": 6132,
+       "thumb": "https://i.ytimg.com/vi/vzrcKaGlvso/mqdefault.jpg",
+       "id": "vzrcKaGlvso",
+       "title": "alcaras v. Ninjaa, Part 4 [Old World Tournament] [PoV]"
       }
      ]
     }
@@ -885,14 +995,14 @@ const DATA = {
    "bracket": true,
    "sub": false,
    "n_parts": 4,
-   "n_videos": 4,
-   "total_views": 1032,
-   "total_likes": 41,
-   "avg_views": 258,
-   "avg_likes": 10.2,
-   "lv_ratio": 39.7,
+   "n_videos": 8,
+   "total_views": 1549,
+   "total_likes": 69,
+   "avg_views": 387,
+   "avg_likes": 8.6,
+   "lv_ratio": 44.5,
    "first": "2026-02-01",
-   "hours": 14.0,
+   "hours": 28.1,
    "segments": [
     {
      "label": "Part 1",
@@ -924,6 +1034,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/Iqnlb7USul8/mqdefault.jpg",
        "id": "Iqnlb7USul8",
        "title": "Alcaras v Auro - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=6MGfl_rMf-0",
+       "channel": "alcaras",
+       "views": 182,
+       "dur": 16604,
+       "thumb": "https://i.ytimg.com/vi/6MGfl_rMf-0/mqdefault.jpg",
+       "id": "6MGfl_rMf-0",
+       "title": "alcaras v. Auro, Part 1 [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -957,6 +1077,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/E-3JDcwLfzQ/mqdefault.jpg",
        "id": "E-3JDcwLfzQ",
        "title": "Old World Community Tournament: Auro (Rome) VS Alcaras (Carthage): Part 2."
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=tBBtA-FgIaw",
+       "channel": "alcaras",
+       "views": 127,
+       "dur": 10964,
+       "thumb": "https://i.ytimg.com/vi/tBBtA-FgIaw/mqdefault.jpg",
+       "id": "tBBtA-FgIaw",
+       "title": "alcaras v. Auro, Part 2 [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -990,6 +1120,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/xhg9x17MZv4/mqdefault.jpg",
        "id": "xhg9x17MZv4",
        "title": "Old World Community Tournament: Auro (Rome) VS Alcaras (Carthage): Part 3."
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=RFG23KpAsWo",
+       "channel": "alcaras",
+       "views": 108,
+       "dur": 13150,
+       "thumb": "https://i.ytimg.com/vi/RFG23KpAsWo/mqdefault.jpg",
+       "id": "RFG23KpAsWo",
+       "title": "alcaras v. Auro, Part 3  [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -1023,6 +1163,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/dzmsYfXt-3w/mqdefault.jpg",
        "id": "dzmsYfXt-3w",
        "title": "Auro v Alcaras - Part 4 - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=HggsYYsk9Es",
+       "channel": "alcaras",
+       "views": 100,
+       "dur": 9969,
+       "thumb": "https://i.ytimg.com/vi/HggsYYsk9Es/mqdefault.jpg",
+       "id": "HggsYYsk9Es",
+       "title": "alcaras v. Auro, Part 4  [Old World Tournament] [PoV]"
       }
      ]
     }
@@ -1056,15 +1206,15 @@ const DATA = {
    "winner": "Ninjaa",
    "bracket": true,
    "sub": false,
-   "n_parts": 2,
-   "n_videos": 2,
-   "total_views": 809,
-   "total_likes": 28,
-   "avg_views": 404,
+   "n_parts": 3,
+   "n_videos": 3,
+   "total_views": 1074,
+   "total_likes": 42,
+   "avg_views": 358,
    "avg_likes": 14.0,
-   "lv_ratio": 34.6,
+   "lv_ratio": 39.1,
    "first": "2026-01-25",
-   "hours": 6.4,
+   "hours": 10.5,
    "segments": [
     {
      "label": "Part 1",
@@ -1096,6 +1246,39 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/uu7zOsBM3Pc/mqdefault.jpg",
        "id": "uu7zOsBM3Pc",
        "title": "Ninjaa v Nizar - Old World Community Tournament"
+      }
+     ]
+    },
+    {
+     "label": "Part 2",
+     "kind": "p",
+     "primary": {
+      "id": "DwimsHEIzgc",
+      "title": "[OWT] Nizar vs Ninjaa part 2 (Match 57)",
+      "angle": "Broadcast",
+      "rank": 0,
+      "pkey": [
+       "p",
+       2
+      ],
+      "views": 265,
+      "likes": 14,
+      "dur": 14870,
+      "date": "2026-01-26",
+      "channel": "Jams",
+      "url": "https://www.youtube.com/watch?v=DwimsHEIzgc",
+      "thumb": "https://i.ytimg.com/vi/DwimsHEIzgc/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "Broadcast",
+       "url": "https://www.youtube.com/watch?v=DwimsHEIzgc",
+       "channel": "Jams",
+       "views": 265,
+       "dur": 14870,
+       "thumb": "https://i.ytimg.com/vi/DwimsHEIzgc/mqdefault.jpg",
+       "id": "DwimsHEIzgc",
+       "title": "[OWT] Nizar vs Ninjaa part 2 (Match 57)"
       }
      ]
     },
@@ -1616,18 +1799,18 @@ const DATA = {
    "winner": "Alcaras",
    "bracket": true,
    "sub": false,
-   "n_parts": 1,
-   "n_videos": 1,
-   "total_views": 578,
-   "total_likes": 17,
-   "avg_views": 578,
-   "avg_likes": 17.0,
-   "lv_ratio": 29.4,
+   "n_parts": 2,
+   "n_videos": 4,
+   "total_views": 890,
+   "total_likes": 37,
+   "avg_views": 445,
+   "avg_likes": 9.2,
+   "lv_ratio": 41.6,
    "first": "2026-01-25",
-   "hours": 3.1,
+   "hours": 8.8,
    "segments": [
     {
-     "label": "Full match",
+     "label": "Part 1",
      "kind": "p",
      "primary": {
       "id": "MWri1CzkD2s",
@@ -1656,6 +1839,59 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/MWri1CzkD2s/mqdefault.jpg",
        "id": "MWri1CzkD2s",
        "title": "Siontific v Alcaras part 1 - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=wSn-7nBYV5s",
+       "channel": "alcaras",
+       "views": 164,
+       "dur": 10933,
+       "thumb": "https://i.ytimg.com/vi/wSn-7nBYV5s/mqdefault.jpg",
+       "id": "wSn-7nBYV5s",
+       "title": "alcaras v. Siontific, Part 1 [Old World Tournament] [PoV]"
+      },
+      {
+       "angle": "Interview",
+       "url": "https://www.youtube.com/watch?v=pfgYLuqhGj4",
+       "channel": "alcaras",
+       "views": 71,
+       "dur": 5062,
+       "thumb": "https://i.ytimg.com/vi/pfgYLuqhGj4/mqdefault.jpg",
+       "id": "pfgYLuqhGj4",
+       "title": "alcaras v. Siontific, Post-game discussion [Old World Tournament] [PoV]"
+      }
+     ]
+    },
+    {
+     "label": "Part 2",
+     "kind": "p",
+     "primary": {
+      "id": "xHDp4cn8jlc",
+      "title": "alcaras v. Siontific, Part 2 [Old World Tournament] [PoV]",
+      "angle": "PoV \u2014 alcaras",
+      "rank": 2,
+      "pkey": [
+       "p",
+       2
+      ],
+      "views": 77,
+      "likes": 4,
+      "dur": 4443,
+      "date": "2026-01-26",
+      "channel": "alcaras",
+      "url": "https://www.youtube.com/watch?v=xHDp4cn8jlc",
+      "thumb": "https://i.ytimg.com/vi/xHDp4cn8jlc/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=xHDp4cn8jlc",
+       "channel": "alcaras",
+       "views": 77,
+       "dur": 4443,
+       "thumb": "https://i.ytimg.com/vi/xHDp4cn8jlc/mqdefault.jpg",
+       "id": "xHDp4cn8jlc",
+       "title": "alcaras v. Siontific, Part 2 [Old World Tournament] [PoV]"
       }
      ]
     }
@@ -1754,15 +1990,15 @@ const DATA = {
    "winner": "Alcaras",
    "bracket": true,
    "sub": false,
-   "n_parts": 4,
-   "n_videos": 5,
-   "total_views": 1022,
-   "total_likes": 60,
-   "avg_views": 256,
-   "avg_likes": 12.0,
-   "lv_ratio": 58.7,
+   "n_parts": 7,
+   "n_videos": 13,
+   "total_views": 2084,
+   "total_likes": 105,
+   "avg_views": 298,
+   "avg_likes": 8.1,
+   "lv_ratio": 50.4,
    "first": "2025-12-07",
-   "hours": 12.4,
+   "hours": 32.0,
    "segments": [
     {
      "label": "Part 1",
@@ -1794,6 +2030,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/C-aLze7mhK4/mqdefault.jpg",
        "id": "C-aLze7mhK4",
        "title": "Alcaras v Blaj - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=TArgQSsKewg",
+       "channel": "alcaras",
+       "views": 153,
+       "dur": 11020,
+       "thumb": "https://i.ytimg.com/vi/TArgQSsKewg/mqdefault.jpg",
+       "id": "TArgQSsKewg",
+       "title": "alcaras v. Blaj, Part 1 [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -1827,6 +2073,16 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/tXhDKXHJo9I/mqdefault.jpg",
        "id": "tXhDKXHJo9I",
        "title": "Alcaras v Blaj - Part 2 Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=lSyWaNMPMVQ",
+       "channel": "alcaras",
+       "views": 97,
+       "dur": 9750,
+       "thumb": "https://i.ytimg.com/vi/lSyWaNMPMVQ/mqdefault.jpg",
+       "id": "lSyWaNMPMVQ",
+       "title": "alcaras v. Blaj, Part 2 [Old World Tournament] [PoV]"
       }
      ]
     },
@@ -1874,6 +2130,92 @@ const DATA = {
      ]
     },
     {
+     "label": "Part 4",
+     "kind": "p",
+     "primary": {
+      "id": "JDxbl5tQr4w",
+      "title": "Alcaras v Blaj - Part 4 - Old World Community Tournament",
+      "angle": "Broadcast",
+      "rank": 0,
+      "pkey": [
+       "p",
+       4
+      ],
+      "views": 268,
+      "likes": 15,
+      "dur": 9632,
+      "date": "2025-12-15",
+      "channel": "The Siontific Method",
+      "url": "https://www.youtube.com/watch?v=JDxbl5tQr4w",
+      "thumb": "https://i.ytimg.com/vi/JDxbl5tQr4w/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "Broadcast",
+       "url": "https://www.youtube.com/watch?v=JDxbl5tQr4w",
+       "channel": "The Siontific Method",
+       "views": 268,
+       "dur": 9632,
+       "thumb": "https://i.ytimg.com/vi/JDxbl5tQr4w/mqdefault.jpg",
+       "id": "JDxbl5tQr4w",
+       "title": "Alcaras v Blaj - Part 4 - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=c_i6Y7g53DU",
+       "channel": "alcaras",
+       "views": 83,
+       "dur": 9910,
+       "thumb": "https://i.ytimg.com/vi/c_i6Y7g53DU/mqdefault.jpg",
+       "id": "c_i6Y7g53DU",
+       "title": "alcaras v. Blaj, Part 4 [Old World Tournament] [PoV]"
+      }
+     ]
+    },
+    {
+     "label": "Part 5",
+     "kind": "p",
+     "primary": {
+      "id": "es7xaKUbD6k",
+      "title": "Alcaras v Blaj - Part 5 - Old World Community Tournament",
+      "angle": "Broadcast",
+      "rank": 0,
+      "pkey": [
+       "p",
+       5
+      ],
+      "views": 301,
+      "likes": 8,
+      "dur": 8121,
+      "date": "2026-01-11",
+      "channel": "The Siontific Method",
+      "url": "https://www.youtube.com/watch?v=es7xaKUbD6k",
+      "thumb": "https://i.ytimg.com/vi/es7xaKUbD6k/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "Broadcast",
+       "url": "https://www.youtube.com/watch?v=es7xaKUbD6k",
+       "channel": "The Siontific Method",
+       "views": 301,
+       "dur": 8121,
+       "thumb": "https://i.ytimg.com/vi/es7xaKUbD6k/mqdefault.jpg",
+       "id": "es7xaKUbD6k",
+       "title": "Alcaras v Blaj - Part 5 - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=7ax7--8bMBM",
+       "channel": "alcaras",
+       "views": 56,
+       "dur": 8165,
+       "thumb": "https://i.ytimg.com/vi/7ax7--8bMBM/mqdefault.jpg",
+       "id": "7ax7--8bMBM",
+       "title": "alcaras v. Blaj, Part 5 [Old World Tournament] [PoV]"
+      }
+     ]
+    },
+    {
      "label": "Part 6",
      "kind": "p",
      "primary": {
@@ -1903,6 +2245,49 @@ const DATA = {
        "thumb": "https://i.ytimg.com/vi/r24cGn72Df8/mqdefault.jpg",
        "id": "r24cGn72Df8",
        "title": "Alcaras v Blaj - Part 6 - Old World Community Tournament"
+      },
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=9wUcowJ-bH8",
+       "channel": "alcaras",
+       "views": 51,
+       "dur": 6951,
+       "thumb": "https://i.ytimg.com/vi/9wUcowJ-bH8/mqdefault.jpg",
+       "id": "9wUcowJ-bH8",
+       "title": "alcaras v. Blaj, Part 6 [Old World Tournament] [PoV]"
+      }
+     ]
+    },
+    {
+     "label": "Part 7",
+     "kind": "p",
+     "primary": {
+      "id": "6zsRBzP-AJc",
+      "title": "alcaras v. Blaj, Part 7 [Old World Tournament] [PoV]",
+      "angle": "PoV \u2014 alcaras",
+      "rank": 2,
+      "pkey": [
+       "p",
+       7
+      ],
+      "views": 53,
+      "likes": 1,
+      "dur": 7054,
+      "date": "2026-01-19",
+      "channel": "alcaras",
+      "url": "https://www.youtube.com/watch?v=6zsRBzP-AJc",
+      "thumb": "https://i.ytimg.com/vi/6zsRBzP-AJc/mqdefault.jpg"
+     },
+     "angles": [
+      {
+       "angle": "PoV \u2014 alcaras",
+       "url": "https://www.youtube.com/watch?v=6zsRBzP-AJc",
+       "channel": "alcaras",
+       "views": 53,
+       "dur": 7054,
+       "thumb": "https://i.ytimg.com/vi/6zsRBzP-AJc/mqdefault.jpg",
+       "id": "6zsRBzP-AJc",
+       "title": "alcaras v. Blaj, Part 7 [Old World Tournament] [PoV]"
       }
      ]
     }
@@ -6487,20 +6872,32 @@ function natRow(m){
   return ps.length ? `<div class="natrow">${ps.join('<span class="vs">vs</span>')}</div>` : '';
 }
 const angShort = a => a.replace('PoV — ','▸ ').replace('PoV','▸ PoV');
+const isPov = a => /PoV/i.test(a.angle);
+const esc = s => (s||'').replace(/"/g,'&quot;');
+// split a segment's angles into: the top (cast/broadcast), the PoV row(s), and any extras
+function splitAngles(seg){
+  const A = seg.angles;
+  const povs = A.filter(isPov);
+  const rest = A.filter(a => !isPov(a));   // broadcast / cast / interview (rank-sorted)
+  const main = rest[0] || povs[0];
+  return { main, povs: povs.filter(a => a !== main), extra: rest.filter(a => a !== main) };
+}
 function segCard(seg){          // big card (featured)
-  const pr = seg.primary, iv = pr.angle==='Interview';
-  const alts = seg.angles.slice(1);
-  const altHtml = alts.length ? `<div class="alts">also: ${alts.map(a=>`<a href="${a.url}" target="_blank" rel="noopener">${angShort(a.angle)}</a>`).join(' · ')}</div>` : '';
+  const { main, povs, extra } = splitAngles(seg);
+  const iv = main.angle === 'Interview';
+  const extraHtml = extra.length ? `<div class="alts">also: ${extra.map(a=>`<a href="${a.url}" target="_blank" rel="noopener">${angShort(a.angle)}</a>`).join(' · ')}</div>` : '';
+  const povHtml = povs.map(a => `<a class="povtw" href="${a.url}" target="_blank" rel="noopener" title="${esc(a.title)}"><img loading="lazy" src="${a.thumb}" alt=""><span class="povtag">${angShort(a.angle)}${a.views!=null?` <span class="pvc">${fmt(a.views)}</span>`:''}</span></a>`).join('');
   return `<div class="part">
-    <a class="tw" href="${pr.url}" target="_blank" rel="noopener" title="${pr.title?pr.title.replace(/"/g,'&quot;'):''}"><img loading="lazy" src="${pr.thumb}" alt=""><div class="dur">${durShort(pr.dur)}</div></a>
+    <a class="tw" href="${main.url}" target="_blank" rel="noopener" title="${esc(main.title)}"><img loading="lazy" src="${main.thumb}" alt=""><div class="dur">${durShort(main.dur)}</div></a>
     <div class="cap"><div class="pl${iv?' iv':''}">${seg.label}</div>
-    <div class="pv">${pr.angle!=='Broadcast'?pr.angle+' · ':''}${pr.views!=null?fmt(pr.views)+' views':''}</div>
-    <div class="ch">${pr.channel||''}</div>${altHtml}</div></div>`;
+    <div class="pv">${main.angle!=='Broadcast'?main.angle+' · ':''}${main.views!=null?fmt(main.views)+' views':''}</div>
+    <div class="ch">${main.channel||''}</div></div>${extraHtml}${povHtml}</div>`;
 }
 function segThumb(seg){         // mini thumb (browse)
-  const pr = seg.primary, alts = seg.angles.slice(1);
-  const altHtml = alts.length ? `<div class="alts">${alts.map(a=>`<a href="${a.url}" target="_blank" rel="noopener" title="${a.angle}">${angShort(a.angle)}</a>`).join(' ')}</div>` : '';
-  return `<div class="th"><a href="${pr.url}" target="_blank" rel="noopener" title="${pr.title?pr.title.replace(/"/g,'&quot;'):''}"><img loading="lazy" src="${pr.thumb}" alt=""><div class="tl">${seg.label}</div></a>${altHtml}</div>`;
+  const { main, povs, extra } = splitAngles(seg);
+  const extraHtml = extra.length ? `<div class="alts">${extra.map(a=>`<a href="${a.url}" target="_blank" rel="noopener" title="${a.angle}">${angShort(a.angle)}</a>`).join(' ')}</div>` : '';
+  const povHtml = povs.map(a => `<a class="povth" href="${a.url}" target="_blank" rel="noopener" title="${esc(a.title)}"><img loading="lazy" src="${a.thumb}" alt=""><span>${angShort(a.angle)}</span></a>`).join('');
+  return `<div class="th"><a href="${main.url}" target="_blank" rel="noopener" title="${esc(main.title)}"><img loading="lazy" src="${main.thumb}" alt=""><div class="tl">${seg.label}</div></a>${extraHtml}${povHtml}</div>`;
 }
 const allSegs = m => [...(m.segments||[]), ...(m.clips||[])];
 

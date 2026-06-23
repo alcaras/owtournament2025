@@ -89,8 +89,8 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .match-stats .v{font-family:var(--font-display);font-size:21px;}
 .match-stats .l{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--text-faint);margin-top:2px;}
 .blurb{padding:0 22px 14px;color:var(--text-soft);max-width:76ch;}
-.parts{display:flex;gap:11px;overflow-x:auto;padding:4px 22px 20px;scrollbar-width:thin;}
-.part{flex:0 0 auto;width:178px;display:block;border-radius:var(--radius-sm);overflow:hidden;
+.parts{display:flex;flex-wrap:wrap;gap:11px;padding:4px 22px 20px;align-items:flex-start;}
+.part{flex:0 0 178px;width:178px;display:flex;flex-direction:column;border-radius:var(--radius-sm);overflow:hidden;
   background:var(--bg-elev-2);border:1px solid var(--border);transition:transform .12s,border-color .12s;}
 .part:hover{transform:translateY(-3px);border-color:var(--gold-soft);text-decoration:none;}
 .part .tw{display:block;position:relative;aspect-ratio:16/9;background:#000;}
@@ -100,12 +100,26 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .part .pl{font-size:12px;font-weight:600;} .part .pl.iv{color:var(--gold-soft);}
 .part .pv{font-size:10.5px;color:var(--text-dim);margin-top:2px;}
 .part .ch{font-size:10px;color:var(--text-faint);margin-top:1px;}
-.part .alts{font-size:10.5px;color:var(--text-faint);margin-top:5px;line-height:1.5;}
+.part .alts{font-size:10.5px;color:var(--text-faint);margin:0 9px 9px;line-height:1.5;}
 .part .alts a{color:var(--gold-soft);}
+/* PoV row — sits directly below the cast thumbnail of the same part */
+.part .povtw{display:block;position:relative;aspect-ratio:16/9;background:#000;margin-top:auto;border-top:1px solid var(--border);}
+.part .povtw+.povtw{border-top:1px solid var(--border);}
+.part .povtw img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9;}
+.part .povtw:hover img{opacity:1;}
+.part .povtw .povtag{position:absolute;left:5px;bottom:5px;display:flex;align-items:center;gap:4px;
+  background:rgba(10,10,12,.82);color:var(--gold-soft);font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;}
+.part .povtw .povtag .pvc{color:var(--text-soft);font-weight:500;}
 .mini .th{position:relative;}
 .mini .th .alts{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px;}
 .mini .th .alts a{font-size:9px;color:var(--gold-soft);background:var(--bg-elev-2);border:1px solid var(--border);border-radius:3px;padding:0 3px;}
 .mini .th .alts a:hover{border-color:var(--gold-soft);text-decoration:none;}
+/* PoV thumbnail stacked under each browse part, lined up with it */
+.mini .th .povth{display:block;position:relative;margin-top:3px;border-radius:4px;overflow:hidden;border:1px solid var(--border);}
+.mini .th .povth img{width:128px;aspect-ratio:16/9;object-fit:cover;display:block;background:#000;opacity:.88;}
+.mini .th .povth:hover img{opacity:1;}
+.mini .th .povth:hover{border-color:var(--gold-soft);}
+.mini .th .povth span{position:absolute;left:3px;bottom:3px;background:rgba(10,10,12,.82);color:var(--gold-soft);font-size:9px;font-weight:600;padding:0 4px;border-radius:3px;}
 
 /* browse by round */
 .round-head{display:flex;align-items:center;gap:12px;margin:34px 0 4px;}
@@ -116,8 +130,8 @@ main{max-width:1140px;margin:0 auto;padding:8px 24px 80px;}
 .mini.empty{opacity:.55;border-style:dashed;}
 .mini .mt{font-family:var(--font-display);font-size:18px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
 .mini .mmeta{color:var(--text-dim);font-size:11.5px;margin:3px 0 9px;}
-.mini .thumbs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding-bottom:3px;}
-.mini .th{flex:0 0 auto;width:128px;}
+.mini .thumbs{display:flex;flex-wrap:wrap;gap:7px;padding-bottom:3px;align-items:flex-start;}
+.mini .th{flex:0 0 128px;width:128px;}
 .mini .th img{width:128px;aspect-ratio:16/9;height:auto;object-fit:cover;border-radius:4px;border:1px solid var(--border);display:block;background:#000;}
 .mini .th:hover img{border-color:var(--gold-soft);}
 .mini .th .tl{font-size:9.5px;color:var(--text-dim);margin-top:2px;line-height:1.25;}
@@ -228,20 +242,32 @@ function natRow(m){
   return ps.length ? `<div class="natrow">${ps.join('<span class="vs">vs</span>')}</div>` : '';
 }
 const angShort = a => a.replace('PoV — ','▸ ').replace('PoV','▸ PoV');
+const isPov = a => /PoV/i.test(a.angle);
+const esc = s => (s||'').replace(/"/g,'&quot;');
+// split a segment's angles into: the top (cast/broadcast), the PoV row(s), and any extras
+function splitAngles(seg){
+  const A = seg.angles;
+  const povs = A.filter(isPov);
+  const rest = A.filter(a => !isPov(a));   // broadcast / cast / interview (rank-sorted)
+  const main = rest[0] || povs[0];
+  return { main, povs: povs.filter(a => a !== main), extra: rest.filter(a => a !== main) };
+}
 function segCard(seg){          // big card (featured)
-  const pr = seg.primary, iv = pr.angle==='Interview';
-  const alts = seg.angles.slice(1);
-  const altHtml = alts.length ? `<div class="alts">also: ${alts.map(a=>`<a href="${a.url}" target="_blank" rel="noopener">${angShort(a.angle)}</a>`).join(' · ')}</div>` : '';
+  const { main, povs, extra } = splitAngles(seg);
+  const iv = main.angle === 'Interview';
+  const extraHtml = extra.length ? `<div class="alts">also: ${extra.map(a=>`<a href="${a.url}" target="_blank" rel="noopener">${angShort(a.angle)}</a>`).join(' · ')}</div>` : '';
+  const povHtml = povs.map(a => `<a class="povtw" href="${a.url}" target="_blank" rel="noopener" title="${esc(a.title)}"><img loading="lazy" src="${a.thumb}" alt=""><span class="povtag">${angShort(a.angle)}${a.views!=null?` <span class="pvc">${fmt(a.views)}</span>`:''}</span></a>`).join('');
   return `<div class="part">
-    <a class="tw" href="${pr.url}" target="_blank" rel="noopener" title="${pr.title?pr.title.replace(/"/g,'&quot;'):''}"><img loading="lazy" src="${pr.thumb}" alt=""><div class="dur">${durShort(pr.dur)}</div></a>
+    <a class="tw" href="${main.url}" target="_blank" rel="noopener" title="${esc(main.title)}"><img loading="lazy" src="${main.thumb}" alt=""><div class="dur">${durShort(main.dur)}</div></a>
     <div class="cap"><div class="pl${iv?' iv':''}">${seg.label}</div>
-    <div class="pv">${pr.angle!=='Broadcast'?pr.angle+' · ':''}${pr.views!=null?fmt(pr.views)+' views':''}</div>
-    <div class="ch">${pr.channel||''}</div>${altHtml}</div></div>`;
+    <div class="pv">${main.angle!=='Broadcast'?main.angle+' · ':''}${main.views!=null?fmt(main.views)+' views':''}</div>
+    <div class="ch">${main.channel||''}</div></div>${extraHtml}${povHtml}</div>`;
 }
 function segThumb(seg){         // mini thumb (browse)
-  const pr = seg.primary, alts = seg.angles.slice(1);
-  const altHtml = alts.length ? `<div class="alts">${alts.map(a=>`<a href="${a.url}" target="_blank" rel="noopener" title="${a.angle}">${angShort(a.angle)}</a>`).join(' ')}</div>` : '';
-  return `<div class="th"><a href="${pr.url}" target="_blank" rel="noopener" title="${pr.title?pr.title.replace(/"/g,'&quot;'):''}"><img loading="lazy" src="${pr.thumb}" alt=""><div class="tl">${seg.label}</div></a>${altHtml}</div>`;
+  const { main, povs, extra } = splitAngles(seg);
+  const extraHtml = extra.length ? `<div class="alts">${extra.map(a=>`<a href="${a.url}" target="_blank" rel="noopener" title="${a.angle}">${angShort(a.angle)}</a>`).join(' ')}</div>` : '';
+  const povHtml = povs.map(a => `<a class="povth" href="${a.url}" target="_blank" rel="noopener" title="${esc(a.title)}"><img loading="lazy" src="${a.thumb}" alt=""><span>${angShort(a.angle)}</span></a>`).join('');
+  return `<div class="th"><a href="${main.url}" target="_blank" rel="noopener" title="${esc(main.title)}"><img loading="lazy" src="${main.thumb}" alt=""><div class="tl">${seg.label}</div></a>${extraHtml}${povHtml}</div>`;
 }
 const allSegs = m => [...(m.segments||[]), ...(m.clips||[])];
 
