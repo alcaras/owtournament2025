@@ -183,8 +183,8 @@ footer a{color:var(--gold-soft);}
 
 <footer>
   <p>Compiled 2026-06-18 from YouTube across <span id="nchan"></span> caster channels (Mohawk Games, The Siontific Method, alcaras, Nizar Gaming, Syno, Aran, Jams, and more). Bracket data from the
-  <a href="https://challonge.com/owduels2025">Challonge bracket</a>. A "match" bundles every video of one matchup (casts + player PoVs + multi-part). View/like counts are lifetime totals; some parts have likes hidden. 8 early-round bracket matches have no known video.
-  Nations (crests/colors from the <a href="https://alcaras.github.io/owreference/">Old World Reference</a>) are parsed from the tournament save files via <a href="https://prospector.fly.dev/">Prospector</a> — 46 of 53 matchups.</p>
+  <a href="https://challonge.com/owduels2025">Challonge bracket</a>. A "match" bundles every video of one matchup (casts + player PoVs + multi-part). View/like counts are lifetime totals; some parts have likes hidden. <span id="unfilmedct"></span> early-round bracket matches have no known video.
+  Nations (crests/colors from the <a href="https://alcaras.github.io/owreference/">Old World Reference</a>) are parsed from the tournament save files via <a href="https://prospector.fly.dev/">Prospector</a> — <span id="natct"></span> of <span id="matchupct"></span> matchups.</p>
 </footer>
 
 <script>
@@ -296,7 +296,11 @@ document.getElementById('featured').innerHTML = Object.keys(BLURBS).map(label=>{
 const bracketMatches = M.filter(m => m.round!=='Substitute');
 const unfByRound = {}; (DATA.unfilmed||[]).forEach(u => (unfByRound[u.round]=unfByRound[u.round]||[]).push(u));
 const roundsPresent = DATA.order.filter(r => r!=='Substitute' && (bracketMatches.some(m=>m.round===r) || unfByRound[r]));
-document.getElementById('browsesub').textContent = `${bracketMatches.length} matches with video · 8 early matches not filmed`;
+const unfilmedCt = (DATA.unfilmed||[]).length;
+document.getElementById('browsesub').textContent = `${bracketMatches.length} matches with video · ${unfilmedCt} early matches not filmed`;
+document.getElementById('unfilmedct').textContent = unfilmedCt;
+document.getElementById('natct').textContent = M.filter(m=>m.nations).length;
+document.getElementById('matchupct').textContent = DATA.n_matchups;
 function miniCard(m, bc){
   return `<div class="mini">
     <div class="mt">${nameHtml(m)} <span class="badge ${bc}">${m.round}</span></div>

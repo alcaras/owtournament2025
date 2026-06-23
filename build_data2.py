@@ -146,8 +146,14 @@ for key, vids in groups.items():
         segments=segments, clips=clips))
 
 # unfilmed bracket matches
+# FAKE pairs: bracket lists a replacement player, but the real (filmed) game was vs the
+# original entrant who was subbed out. Nizar v Hazard is really Nizar v Yagman (filmed) —
+# Hazard replaced Yagman — so it is NOT an unfilmed match.
+FAKE_UNFILMED = {frozenset(['nizar', 'hazard'])}
 unfilmed = []
 for key, ms in brpairs.items():
+    if key in FAKE_UNFILMED:
+        continue
     if key not in {frozenset(k.split('|')) for k in groups}:
         m = sorted(ms, key=lambda x: depth(RN[x['round']]), reverse=True)[0]
         unfilmed.append(dict(label=f"{disp(canon(norm(m['p1'])))} v {disp(canon(norm(m['p2'])))}",
